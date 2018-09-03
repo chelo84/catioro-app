@@ -1,0 +1,82 @@
+#Constants {
+	includeNativeBool: true; 
+}
+
+Form {
+	background-color: white;
+	font-family: "native:MainLight";
+}
+Toolbar {
+	background-color: #89d8f0;
+}
+Title {
+	background-color: #89d8f0;
+	color: white;
+	text-align: center;
+}
+TitleArea {
+	background-color: #89d8f0;
+}
+TitleCommand {
+	background-color: #89d8f0;
+	color: white;
+}
+
+Label {
+	font-family: "native:MainLight";
+}
+
+TextField {
+	background-color: white;
+	font-family: "native:MainLight";
+}
+
+CriarContaTextField {
+	cn1-derive: TextField;
+}
+
+Button {
+	background-color: #89d8f0;
+	box-shadow: 3pt 3pt 10pt 1px rgba(61,59,61,0.6);
+	padding-top: 1.5mm;
+	padding-bottom: 2mm;
+	color: white;
+	text-decoration: cn1-3d;
+}
+
+Button.pressed {
+	background-color: #89bef0;
+}
+
+LoginButton {
+	cn1-derive: Button;
+	margin-top: 3mm;
+	margin-bottom: 2mm;
+	margin-right: 8mm;
+	margin-left: 8mm;
+}
+
+lembrarCB {
+	font-family: "native:MainLight";
+	padding-top: 1mm;
+	margin-left: 4mm;
+}
+
+erro {
+	cn1-derive: Label;
+	font-size: 3mm;
+	color: red;
+	margin-left: 2mm;
+}
+
+posLoginBtn {
+	cn1-derive: Button;
+	margin-top: 2mm;
+	margin-bottom: 3mm;
+	margin-left: 5mm;
+	margin-right: 5mm;
+}
+
+PopupDialog {
+	color: red;
+}
