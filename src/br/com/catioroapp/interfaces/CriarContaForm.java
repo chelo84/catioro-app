@@ -2,19 +2,23 @@ package br.com.catioroapp.interfaces;
 
 import com.codename1.components.InfiniteProgress;
 import com.codename1.ui.Button;
+import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Form;
-import com.codename1.ui.Label;
 import com.codename1.ui.TextArea;
+import com.codename1.ui.TextComponent;
 import com.codename1.ui.TextField;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.layouts.TextModeLayout;
+import com.codename1.ui.validation.LengthConstraint;
 import com.codename1.ui.validation.RegexConstraint;
 import com.codename1.ui.validation.Validator;
 
 import br.com.catioroapp.interfaces.util.MeuForm;
 import br.com.catioroapp.service.UsuarioService;
 import br.com.catioroapp.usuario.Usuario;
+import br.com.catioroapp.validador.ConfirmaSenhaConstraint;
 import br.com.catioroapp.validador.ValidadorUsuario;
 
 public class CriarContaForm extends MeuForm {
@@ -24,93 +28,42 @@ public class CriarContaForm extends MeuForm {
 	}
 	
 	private void setFormContent() {
-		this.setLayout(BoxLayout.y());
+		TextModeLayout tl = new TextModeLayout(10, 2);
+		this.setLayout(tl);
 		
-		Label erroNomeDeUsuario = new Label("Nome de usuario inválido, tente outro!");
-		erroNomeDeUsuario.setUIID("erro");
-		erroNomeDeUsuario.setVisible(false);
-		this.add(erroNomeDeUsuario);
+		TextComponent nomeDeUsuario = new TextComponent().label("Nome de usuário");
+		nomeDeUsuario.constraint(TextField.USERNAME);
+		this.add(tl.createConstraint().horizontalSpan(2), nomeDeUsuario);
 		
-		TextField nomeDeUsuario = new TextField();
-		nomeDeUsuario.setUIID("CriarContaTextField");
-		nomeDeUsuario.setHint("Nome de usuario");
-		nomeDeUsuario.setConstraint(TextField.USERNAME);
-		this.add(nomeDeUsuario);
+		TextComponent senha = new TextComponent().label("Senha");
+		senha.constraint(TextField.PASSWORD);
+		this.add(tl.createConstraint().horizontalSpan(2), senha);
 		
-		Label erroSenha = new Label("Senha inválida!");
-		erroSenha.setUIID("erro");
-		erroSenha.setVisible(false);
-		this.add(erroSenha);
+		TextComponent confirmaSenha = new TextComponent().label("Confirma senha");
+		confirmaSenha.constraint(TextField.PASSWORD);
+		this.add(tl.createConstraint().horizontalSpan(2), confirmaSenha);
 		
-		TextField senha = new TextField();
-		senha.setUIID("CriarContaTextField");
-		senha.setHint("Senha");
-		senha.setConstraint(TextField.PASSWORD);
-		this.add(senha);
-		
-		Label erroConfirmaSenha = new Label("Senha e confirmação não são iguais!");
-		erroConfirmaSenha.setUIID("erro");
-		erroConfirmaSenha.setVisible(false);
-		this.add(erroConfirmaSenha);
-		
-		TextField confirmaSenha = new TextField();
-		confirmaSenha.setUIID("CriarContaTextField");
-		confirmaSenha.setHint("Confirmar senha");
-		confirmaSenha.setConstraint(TextField.PASSWORD);
-		this.add(confirmaSenha);
-		
-		Label erroNome = new Label("Nome inválido");
-		erroNome.setUIID("erro");
-		erroNome.setVisible(false);
-		this.add(erroNome);
-		
-    	TextField nome = new TextField();
-    	nome.setUIID("CriarContaTextField");
-    	nome.setHint("Nome");
-    	this.add(nome);
+    	TextComponent nome = new TextComponent().label("Nome");
+    	this.add(tl.createConstraint().horizontalSpan(2), nome);
     	
-		Label erroSobrenome = new Label("Sobrenome inválido");
-		erroSobrenome.setUIID("erro");
-		erroSobrenome.setVisible(false);
-		this.add(erroSobrenome);
+    	TextComponent sobrenome = new TextComponent().label("Sobrenome");
+    	this.add(tl.createConstraint().horizontalSpan(2), sobrenome);
     	
-    	TextField sobrenome = new TextField();
-    	sobrenome.setUIID("CriarContaTextField");
-    	sobrenome.setHint("Sobrenome");
-    	this.add(sobrenome);
+    	TextComponent ddd = new TextComponent().label("DDD");
+    	ddd.constraint(TextField.PHONENUMBER);
+    	this.add(tl.createConstraint().widthPercentage(25), ddd);
     	
-		Label erroTelefone = new Label("Telefone invalido. Ex: 4812345678");
-		erroTelefone.setUIID("erro");
-		erroTelefone.setVisible(false);
-		this.add(erroTelefone);
+    	TextComponent telefone = new TextComponent().label("Telefone");
+    	telefone.constraint(TextField.PHONENUMBER);
+    	this.add(tl.createConstraint().widthPercentage(75), telefone);
     	
-    	TextField telefone = new TextField();
-    	telefone.setUIID("CriarContaTextField");
-    	telefone.setHint("Telefone");
-    	telefone.setConstraint(TextField.PHONENUMBER);
-    	this.add(telefone);
+    	TextComponent email = new TextComponent().label("E-mail");
+    	email.constraint(TextField.EMAILADDR);
+    	this.add(tl.createConstraint().horizontalSpan(2), email);
     	
-		Label erroEmail = new Label("E-mail inválido, tente outro!");
-		erroEmail.setUIID("erro");
-		erroEmail.setVisible(false);
-		this.add(erroEmail);
-    	
-    	TextField email = new TextField();
-    	email.setUIID("CriarContaTextField");
-    	email.setHint("E-mail");
-    	email.setConstraint(TextField.EMAILADDR);
-    	this.add(email);
-    	
-		Label erroCpf = new Label("Cpf inválido!");
-		erroCpf.setUIID("erro");
-		erroCpf.setVisible(false);
-		this.add(erroCpf);
-    	
-    	TextField cpf = new TextField();
-    	cpf.setUIID("CriarContaTextField");
-    	cpf.setHint("CPF");
-    	cpf.setConstraint(TextField.NUMERIC);
-    	this.add(cpf);
+    	TextComponent cpf = new TextComponent().label("CPF");
+    	cpf.constraint(TextField.NUMERIC);
+    	this.add(tl.createConstraint().horizontalSpan(2), cpf);
     	
     	Button criarContaBtn = new Button("Criar conta");
     	criarContaBtn.addActionListener((ae) -> {
@@ -118,24 +71,21 @@ public class CriarContaForm extends MeuForm {
     		
     		ValidadorUsuario vu = UsuarioService.usuarioExiste(nomeDeUsuario.getText(), cpf.getText(), email.getText(), telefone.getText());
     		if(vu.existe.get()) {
-    			erroNomeDeUsuario.setVisible(vu.existeNomeDeUsuario.get());
-    			erroEmail.setVisible(vu.existeEmail.get());
-    			erroCpf.setVisible(vu.existeCpf.get());
-    			erroTelefone.setVisible(vu.existeTelefone.get());
-    			
     			ip.dispose();
+    			Dialog.show("Informações inválidas", ((vu.existeNomeDeUsuario.get())? "Nome de usuário já utilizado, tente outro!\n" : "") + 
+    												((vu.existeEmail.get())? "E-mail já utilizado, tente outro!\n" : "") +
+    												((vu.existeCpf.get())? "CPF já utilizado!\n" : "") +
+    												((vu.existeTelefone.get())? "Telefone já utilizado, tente outro!" : ""), "Ok", "Cancel");
     			return;
     		}
-    		erroEmail.setVisible(RegexConstraint.validEmail().isValid(email));
-    		erroConfirmaSenha.setVisible(!senha.getText().equals(confirmaSenha.getText()));
     		this.revalidate();
     		
     		if(UsuarioService.addNovoUsuario(new Usuario()
     									  .nomeDeUsuario.set(nomeDeUsuario.getText())
     									  .senha.set(senha.getText())
-    									  .nome.set(nome.getText())
+    									  .nome.set(sobrenome.getText())
     									  .sobrenome.set(sobrenome.getText())
-    									  .telefone.set(telefone.getText())
+    									  .telefone.set(ddd.getText() +""+ telefone.getText())
     									  .cpf.set(cpf.getText())
     									  .email.set(email.getText()))) {
     			Dialog dlg = new Dialog() {
@@ -161,6 +111,23 @@ public class CriarContaForm extends MeuForm {
     		ip.dispose();
     	});
     	criarContaBtn.setUIID("LoginButton");
-    	this.add(criarContaBtn);
+    	this.add(tl.createConstraint().horizontalSpan(2), criarContaBtn);
+    	
+    	Validator v = new Validator();
+    	v.addConstraint(nomeDeUsuario, new LengthConstraint(5, "Nome de usuário inválido, minimo 5 caracteres!"))
+    		.addConstraint(senha, new LengthConstraint(5, "Senha inválida, minimo 5 caracteres!"))
+    		.addConstraint(confirmaSenha, new ConfirmaSenhaConstraint(senha, "Senha inválida!"))
+    		.addConstraint(nome, new LengthConstraint(3, "Nome inválido, minimo 3 caracteres!"))
+    		.addConstraint(sobrenome, new LengthConstraint(5, "Senha inválida, minimo 5 caracteres!"))
+    		.addConstraint(telefone, new RegexConstraint("(\\d){8,12}", "Telefone inválido, Ex: 4812345678"))
+    		.addConstraint(email, RegexConstraint.validEmail("E-mail inválido"))
+    		.addConstraint(cpf, new RegexConstraint("(\\d){11}", "CPF inválido, precisa ter 11 digitos"));
+    	
+    	Validator.setValidateOnEveryKey(true);
+    	System.err.println(Validator.isValidateOnEveryKey());
+    	System.err.println(ddd.getText() +""+ telefone.getText());
+    	
+    	v.setShowErrorMessageForFocusedComponent(true);
+    	v.addSubmitButtons(criarContaBtn);
 	}
 }

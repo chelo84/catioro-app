@@ -12,6 +12,7 @@ import com.codename1.util.Callback;
 import com.codename1.util.FailureCallback;
 import com.codename1.util.SuccessCallback;
 
+import br.com.catioroapp.globals.Globals;
 import br.com.catioroapp.usuario.Usuario;
 import br.com.catioroapp.validador.ValidadorUsuario;
 
@@ -19,24 +20,24 @@ public class UsuarioService {
 	private static Usuario eu;
 	
 	public static void loadUsuario() {
-		Preferences.setPreferencesLocation("loginPreferences");
+		Preferences.setPreferencesLocation(Globals.LOGIN_PREFERENCES);
 		eu = new Usuario();
 		
 		PreferencesObject.create(eu).bind();
 	}
 	
 	public static void logout() {
-		Preferences.setPreferencesLocation("loginPreferences");
+		Preferences.setPreferencesLocation(Globals.LOGIN_PREFERENCES);
 		Preferences.clearAll();
 	}
 	
 	public static boolean isLoggedIn() {
-		Preferences.setPreferencesLocation("loginPreferences");
+		Preferences.setPreferencesLocation(Globals.LOGIN_PREFERENCES);
 		return Preferences.get("token", null) != null;
 	}
 	
 	public static ValidadorUsuario usuarioExiste(String nomeDeUsuario, String cpf, String email, String telefone) {
-		Preferences.setPreferencesLocation("loginPreferences");
+		Preferences.setPreferencesLocation(Globals.LOGIN_PREFERENCES);
 		Response<Map> response = Rest.get(SERVER_URL +"usuario/existe")
 										.acceptJson()
 										.queryParam("nomeDeUsuario", nomeDeUsuario)
@@ -52,7 +53,7 @@ public class UsuarioService {
 	}
 	
 	public static boolean addNovoUsuario(Usuario usuario) {
-		Preferences.setPreferencesLocation("loginPreferences");
+		Preferences.setPreferencesLocation(Globals.LOGIN_PREFERENCES);
 		Response<String> token = Rest.post(SERVER_URL +"usuario/add")
 									 .jsonContent()
 									 .body(usuario.getPropertyIndex().toJSON())
@@ -73,7 +74,7 @@ public class UsuarioService {
 			.queryParam("nomeDeUsuario", nomeDeUsuario)
 			.getAsJsonMapAsync(new Callback<Response<Map>>() {
 				public void onSucess(Response<Map> value) {
-					Preferences.setPreferencesLocation("loginPreferences");
+					Preferences.setPreferencesLocation(Globals.LOGIN_PREFERENCES);
 					eu = new Usuario();
 					
 					eu.getPropertyIndex().populateFromMap(value.getResponseData());

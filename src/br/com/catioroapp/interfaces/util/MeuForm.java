@@ -6,6 +6,7 @@ import com.codename1.ui.layouts.Layout;
 public abstract class MeuForm extends Form {
 	
 	public MeuForm() {
+		this.setTitle("CatioroApp");
 		this.getToolbar().setTitleCentered(true);
 		this.getToolbar().setUIID("Title");
 	}
